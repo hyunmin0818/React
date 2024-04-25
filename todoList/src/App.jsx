@@ -1,5 +1,5 @@
 
-import { useState,useRef, useReducer } from 'react';
+import { useState,useRef, useReducer, useCallback, createContext } from 'react';
 import './App.css'
 import Editor from './components/Editor'
 import Header from './components/Header'
@@ -47,6 +47,9 @@ function reducer(state, action) {
   }
 }
 
+export const TodoContext = createContext();
+
+
 
 function App() {
 
@@ -56,7 +59,7 @@ function App() {
 
   const idRef = useRef(3);
 
-  const onCreate = (content)=>{
+  const onCreate = useCallback((content)=>{
     dispatch({
       type : "CREATE",
       data :
@@ -71,13 +74,13 @@ function App() {
     // 스프레드 연산자로 기존의 todos데이터와 완전 동일한 데이터를 넣어주고, 우리가 추가하려는 newTodo 데이터도 넣어준다.
     // setTodos([newTodo, ...todos]);
 
-  }
-  const onUpdate = (targetId) => {
+  },[]);
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       id: targetId
     });
-  }
+  },[])
   // todos state의 값들 중에서 targetId와 일치하는 id를 갖는 투두 아이템의 isDone변경
 
   //todos 배열에서 targetId와 일치하는 id를 갖는 요소의 isDone데이터만 토글로 바꾼 배열
@@ -100,18 +103,31 @@ function App() {
   //   setTodos(todos.filter((todo)=>todo.id != targetId));
   // }
 
-  const onDelete = (targetId) => {
+  // const onDelete = (targetId) => {
+  //   dispatch({
+  //     type: "DELETE",
+  //     id: targetId
+  //   });
+  // }
+
+  // 1param : 최적화 하고싶은 대상 함수, 그 함수를 토대로 return
+  // 2param : deps, deps가 변경되었을때만 함수 실행
+  const onDelete = useCallback((targetId)=>{
     dispatch({
       type: "DELETE",
       id: targetId
     });
-  }
+  },[]);
 
   return (
       <div className="App">
         <Header/>
-        <Editor onCreate={onCreate}/>
-        <List todos={todos} onUpdate={onUpdate} onDelete={onDelete}/>
+        <TodoContext.Provider value={{
+          todos,onCreate,onDelete,onUpdate
+        }}>
+          <Editor/>
+          <List todos={todos} onUpdate={onUpdate} onDelete={onDelete}/>
+        </TodoContext.Provider>
       </div>
   )
 }
