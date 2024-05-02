@@ -1,13 +1,12 @@
-import BasicLayout from "../layouts/BasicLayout";
+import BasicLayout from "../layouts/BasicLayout.jsx";
 
-function About() {
+function About(){
     return(
-        <BasicLayout >
-       <div className={'text-3xl'}>
-            <div>Aboutpage</div>
-       </div> 
-       </BasicLayout>
+        <BasicLayout>
+            <div className={'text-3xl'}>
+                <div>AboutPages</div>
+            </div>
+        </BasicLayout>
     );
 }
-
 export default About;

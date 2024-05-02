@@ -1,27 +1,25 @@
-import { Outlet,useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import BasicLayout from "../../layouts/BasicLayout";
 import { useCallback } from "react";
 
-function IndexPage() {
+const IndexPage = ()=>{
     const navigate = useNavigate();
     const handleClickList = useCallback(()=>{
-        navigate({pathname: 'list'});
-    }, []);
-    const handleClickAdd = useCallback( ()=>{
-        navigate({pathname: 'add'});
+        navigate({pathname:'list'});
+    },[]);
+    const HandleClickAdd = useCallback(()=>{
+        navigate({pathname:'add'});
     },[]);
 
-    return (
+    return(
         <BasicLayout>
             <div className="w-full flex m-2 p-2 ">
                 <div className="text-xl m-1 p-2 w-20 font-extrabold text-center underline"
-                    onClick={handleClickList}
-                >
+                    onClick={handleClickList}>
                     LIST
                 </div>
                 <div className="text-xl m-1 p-2 w-20 font-extrabold text-center underline"
-                    onClick={handleClickAdd}
-                >
+                    onClick={HandleClickAdd}>
                     ADD
                 </div>
             </div>

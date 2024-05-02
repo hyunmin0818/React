@@ -1,36 +1,44 @@
-import { Suspense, lazy } from "react";
+import {  Children, Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
 import ReadPage from "../pages/todo/ReadPage";
+import AddPage from "../pages/todo/AddPage";
 import ModifyPage from "../pages/todo/ModifyPage";
 
-const Loding = <div className={'bg-purple-200'}>Loding</div>;                            //로딩페이징 구성
-const TodoList = lazy(()=> import("../pages/todo/ListPage")); 
-const TodoAdd = lazy(()=> import("../pages/todo/AddPage")); 
-const TodoModify = lazy(()=> import("../pages/todo/ModifyPage")); 
+const Loading = <div className={'bg-purple-500'}>Loading</div>
+const TodoList = lazy(()=>import("../pages/todo/ListPage"));
+const TodoAdd = lazy(()=>import("../pages/todo/AddPage"));
+const TodoModify = lazy(()=>import("../pages/todo/ModifyPage"));
 
-const todoRouter=()=>{
-    return [
+const todoRouter = ()=> {
+    return[
         {
-            path : 'list',  //todo/list
-            element :<Suspense fallback={Loding}><TodoList /></Suspense>,
+            path : 'list',  // todo/list
+            element : <Suspense><TodoList fallback={Loading}></TodoList></Suspense>,
+           
         },
         {
-            path : '',  //todo/ 요청이 오면 todo/list로 redirection
-            element : <Navigate replace={true} to={'list'} > </Navigate>
+            path : '',  // todo/ 요청이오면 todo/list로 redirection
+            element : <Navigate replace={true}></Navigate>
+           
         },
         {
-            path : 'read/:tno',  //todo/read/30                                              중복X : PK ,중복O : 파라미터 
-            element :<Suspense fallback={Loding}><ReadPage /></Suspense>,
+            path : 'read/:tno',  // todo/list/:tno
+            element : <Suspense  fallback={Loading}><ReadPage/></Suspense>,
+           
         },
         {
-            path : 'add',  // todo/add                                          
-            element :<Suspense fallback={Loding}><TodoAdd /></Suspense>,
+            path : 'add',  // todo/add
+            element : <Suspense fallback={Loading}><AddPage/></Suspense>,
+           
         },
         {
-            path : 'modify/:tno',  //todo/modify/13                                      
-            element :<Suspense fallback={Loding}><TodoModify /></Suspense>,
+            path : 'modify/:tno',  // todo/add
+            element : <Suspense fallback={Loading}><ModifyPage/></Suspense>,
+           
         },
     ]
 };
+
+
 
 export default todoRouter;

@@ -1,11 +1,10 @@
-import BasicMenu from "../components/BasicMenu";
-
+import BasicMenu from "../components/menus/BasicMenu";
 
 function BasicLayout({children}){
-    return(     
+    return(
         <>
            {/* 기존 헤더 대신 BasicMenu*/ }
-           <BasicMenu />
+           <BasicMenu/>
             {/* 상단 여백 my-5 제거 */}
             <div className="bg-white my-5 w-full flex flex-col space-y-1 md:flex-row md:space-x-1 md:space-y-0">
                 {/* 상단 여백 py-40 변경 flex 제거 */}
@@ -14,7 +13,7 @@ function BasicLayout({children}){
                 <aside className="bg-green-300 md:w-1/3 lg:w-1/4 px-5 flex py-5">
                     <h1 className="text-2xl md:text-4xl">Sidebar</h1>
                 </aside>
-            </div>     
+            </div>
         </>
     );
 }

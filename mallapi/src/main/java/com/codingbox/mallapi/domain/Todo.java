@@ -18,10 +18,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class Todo {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todoGenerator")
-	@SequenceGenerator(sequenceName = "todo_seq", name = "todoGenerator", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todoGenerator")
+//	@SequenceGenerator(sequenceName = "todo_seq", name = "todoGenerator", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long tno;
 	
 	@Column(length = 500, nullable = false)
